@@ -20,19 +20,22 @@ class Program
         // size = 3, Top = 'd'
         Console.WriteLine($"Size = {s.Size}, Top = '{s.Top}'");
 
-        s.Pop();
-        s.Pop();
-        s.Pop();
+        try
+        {
+            s.Pop();
+            s.Pop();
+            s.Pop();
+            s.Pop();
+        }
+        catch (EmptyStackException e)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(e.Message);
+            Console.ResetColor();
+        }
         
         // size = 0, Top = null
         Console.WriteLine($"Size = {s.Size}, Top = {(s.Top == null ? "null" : s.Top)}");
-        
-        s.Pop();
-        
-        // EXCEPTION AND RETURN VALUE CHECK
-        var temp = s.Pop();
-        
-        Console.WriteLine($"temp = {(temp == null ? "null" : temp)}");
         
         // ADDITIONAL TASK 1 BASIC CHECK
         s = new Stack("a", "b", "c");

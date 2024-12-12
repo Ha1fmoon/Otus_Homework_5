@@ -2,41 +2,35 @@
 
 public class Stack
 {
-    private readonly List<string> _storage = new List<string>();
+    private StackItem? _top;
 
-    public int Size => _storage.Count;
-    public string? Top => _storage.Count > 0 ? _storage[_storage.Count - 1] : null;
+    public int Size { get; private set; }
+
+    public string? Top => _top?.Value;
 
     public Stack(params string[] values)
     {
-        foreach (var value in values) _storage.Add(value);
+        foreach (var value in values) Add(value);
     }
 
     public void Add(string value)
     {
-        _storage.Add(value);
+        _top = new StackItem(value, _top);
+
+        Size++;
     }
 
     public string? Pop()
     {
-        try
-        {
-            var value = Top;
+        if (Size <= 0 || _top == null) throw new EmptyStackException("Stack is empty");
 
-            if (value == null) throw new EmptyStackException("Stack is empty");
+        var value = Top;
 
-            _storage.RemoveAt(Size - 1);
+        _top = _top.Previous;
 
-            return value;
-        }
-        catch (EmptyStackException e)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine(e.Message);
-            Console.ResetColor();
+        Size--;
 
-            return null;
-        }
+        return value;
     }
 
     public static Stack Concat(params Stack[] stacks)
@@ -46,5 +40,17 @@ public class Stack
         foreach (var stack in stacks) newStack.Merge(stack);
 
         return newStack;
+    }
+
+    private class StackItem
+    {
+        public string Value { get; }
+        public StackItem? Previous { get; }
+
+        public StackItem(string value, StackItem? previous)
+        {
+            Value = value;
+            Previous = previous;
+        }
     }
 }
