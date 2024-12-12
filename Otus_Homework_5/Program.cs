@@ -41,5 +41,12 @@ class Program
 
         // "a", "b", "c", "3", "2", "1" <- top
         Console.WriteLine($"Size = {s.Size}, Top = {(s.Top == null ? "null" : s.Top)}");
+        
+        // ADDITIONAL TASK 2 BASIC CHECK
+        s = Stack.Concat(new Stack("a", "b", "c"), new Stack("1", "2", "3"), new Stack("A", "B", "C"));
+        
+        // "c", "b", "a" "3", "2", "1", "C", "B", "A" <- top
+        Console.WriteLine($"Size = {s.Size}, Top = {(s.Top == null ? "null" : s.Top)}");
+        
     }
 }

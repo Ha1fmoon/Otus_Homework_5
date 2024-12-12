@@ -38,4 +38,13 @@ public class Stack
             return null;
         }
     }
+
+    public static Stack Concat(params Stack[] stacks)
+    {
+        var newStack = new Stack();
+
+        foreach (var stack in stacks) newStack.Merge(stack);
+
+        return newStack;
+    }
 }
